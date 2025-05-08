@@ -4,12 +4,16 @@ import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiRadioboxBlank, mdiCheckboxMarkedCircle } from '@mdi/js';
 import Button from "../components/Button.vue"
 import TabButton from "../components/TabButton.vue"
+import { ref } from 'vue'
+import RadioButton from "@/components/RadioButton.vue";
 
+const activeTab = ref('profile')    
+const gender = ref('male'); // 'male' или 'female'
 </script>
 
 <template>
     <div class="screen">
-        <div>
+        <div class="tabs-container">
             <TabButton :active="activeTab === 'orders'" @click="activeTab = 'orders'">
              Мои заказы
             </TabButton>
@@ -47,14 +51,18 @@ import TabButton from "../components/TabButton.vue"
                     Пол
                 </div>
                 <div class="icon-menu">
-                    <div class="icon-item">
-                        <SvgIcon type="mdi" :path="mdiRadioboxBlank" color="#DDDDDD"/>
-                        <span class="T1">Женский</span> 
-                    </div>
-                    <div class="icon-item">
-                        <SvgIcon type="mdi" :path="mdiCheckboxMarkedCircle" color="#FFC633"/>
-                        <span class="T1">Мужской</span>
-                    </div>
+                    <RadioButton 
+                        v-model="gender"
+                        value="female"
+                        label="Женский"
+                        name="gender"
+                    />
+                    <RadioButton 
+                        v-model="gender"
+                        value="male"
+                        label="Мужской"
+                        name="gender"
+                    />
                     
                 </div>  
             </div>
@@ -95,6 +103,15 @@ import TabButton from "../components/TabButton.vue"
 
 
 <style scoped>
+
+.tabs-container{
+    display: flex;
+    width: 100%;
+}
+
+.tabs-container > * {
+    flex: 1; /* чтобы кнопки занимали равное пространство */
+}
 
 .address-line{
     display: flex;

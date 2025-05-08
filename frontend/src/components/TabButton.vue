@@ -31,8 +31,9 @@
     
     <style scoped>
     .tab-button {
+      border: none;
       padding: 12px 24px;
-      border-bottom: #DDDDDD;
+      border-bottom: 1px solid #dddddd;
       background: none;
       font-size: 20px;
       font-weight: 500;
@@ -41,13 +42,14 @@
       position: relative;
       transition: all 0.2s;
     }
-    
-    .tab-button.active {
+
+    .active {
       color: #1E1E1E;
+      border-bottom: 1px solid #1E1E1E;
       font-weight: 600;
     }
     
-    .tab-button.active::after {
+    .tab-button .active::after {
       content: '';
       position: absolute;
       bottom: -8px;
