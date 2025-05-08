@@ -9,16 +9,16 @@
         default: false
       }
     })
-    
+
     const emit = defineEmits(['click'])
-    
+
     const handleClick = () => {
       if (!props.disabled) {
         emit('click')
       }
     }
     </script>
-    
+
     <template>
       <button
         :class="['tab-button', { active }]"
@@ -28,7 +28,7 @@
         <slot></slot>
       </button>
     </template>
-    
+
     <style scoped>
     .tab-button {
       border: none;
@@ -48,7 +48,7 @@
       border-bottom: 1px solid #1E1E1E;
       font-weight: 600;
     }
-    
+
     .tab-button .active::after {
       content: '';
       position: absolute;
@@ -59,12 +59,12 @@
       background-color: #FFC633;
       border-radius: 3px;
     }
-    
+
     .tab-button:disabled {
       color: #DDDDDD;
       cursor: not-allowed;
     }
-    
+
     .tab-button:not(:disabled):hover {
       color: #1E1E1E;
     }

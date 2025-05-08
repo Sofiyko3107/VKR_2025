@@ -1,16 +1,83 @@
-from .models import Product, Category
-from .serializers import ProductSerializer, CategorySerializer
+from .models import Product, Category, EmailVerification
+from .serializers import ProductSerializer, CategorySerializer, EmailVerificationSerializer
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample, OpenApiTypes
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from .serializers import UserRegistrationSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
+from .utils import send_confirmation_email
 
 User = get_user_model()
+
+
+@extend_schema(
+    description='Проверка подтверждения почты',
+    parameters=[
+        OpenApiParameter(
+            name='email',
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+            description='Email адрес для проверки подтверждения',
+            required=True,
+            examples=[
+                OpenApiExample(
+                    'Пример email',
+                    value='some@mail.ru'
+                ),
+            ],
+        ),
+    ],
+    responses={
+        200: {
+            'type': 'object',
+            'properties': {
+                'status': {
+                    'type': 'string',
+                    'enum': ['confirmed', 'pending'],
+                    'description': 'Статус подтверждения email',
+                }
+            },
+            'example': {
+                'status': 'confirmed'
+            }
+        },
+        404: {
+            'description': 'Email не найден'
+        }
+    },
+    methods=["GET"]
+)
+@api_view(['GET'])
+def check_confirmation(request):
+    print(request.query_params)
+    email = request.GET.get('email')
+    print(email)
+    emailVerification = get_object_or_404(EmailVerification, email=email)
+
+    return Response({
+        'status': 'confirmed' if emailVerification.is_verified else 'pending'
+    })
+
+class EmailVerificationAPIView(APIView):
+    @extend_schema(description="Получение всех категорий",
+                   request=EmailVerificationSerializer,
+                   responses={200: EmailVerificationSerializer}
+                   )
+    def post(self, request):
+        serializer = EmailVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        emailVerification = serializer.save()
+
+        send_confirmation_email(emailVerification)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class RegisterAPIView(generics.CreateAPIView):
@@ -27,7 +94,6 @@ class RegisterAPIView(generics.CreateAPIView):
                 "properties": {
                     "error": {"type": "string"},
                     "email": {"type": "array", "items": {"type": "string"}},
-                    "username": {"type": "array", "items": {"type": "string"}},
                 }
             }
         },
@@ -35,7 +101,6 @@ class RegisterAPIView(generics.CreateAPIView):
             OpenApiExample(
                 "Пример успешного запроса",
                 value={
-                    "username": "newuser",
                     "email": "user@example.com",
                     "password": "securepassword123",
                     "password2": "securepassword123"
@@ -45,7 +110,6 @@ class RegisterAPIView(generics.CreateAPIView):
             OpenApiExample(
                 "Пример ответа",
                 value={
-                    "username": "newuser",
                     "email": "user@example.com"
                 },
                 response_only=True
@@ -99,18 +163,17 @@ class VerifyEmailAPIView(generics.GenericAPIView):
     )
     def get(self, request, token):
         try:
-            user = User.objects.get(verification_token=token)
+            emailVerification = EmailVerification.objects.get(verification_token=token)
 
-            if (timezone.now() - user.token_created_at).days > 1:
+            if (timezone.now() - emailVerification.token_created_at).days > 1:
                 return Response(
                     {'error': 'Срок действия ссылки истек'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            user.is_verified = True
-            user.is_active = True
-            user.verification_token = None
-            user.save()
+            emailVerification.is_verified = True
+            emailVerification.verification_token = None
+            emailVerification.save()
 
             return Response(
                 {'message': 'Email успешно подтвержден!'},

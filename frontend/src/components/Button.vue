@@ -7,7 +7,6 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
-
   },
   alter: {
     type: Boolean,
@@ -20,6 +19,10 @@ const props = defineProps({
   icon: {
     type: Boolean,
     default: false
+  },
+  buttonWidth: {
+    type: String,
+    default: '190px'
   }
 })
 
@@ -42,7 +45,7 @@ const handleClick = () => {
 <template>
   <button
     :class="buttonClass"
-
+    :style="{ width: buttonWidth }"
     :disabled="disabled"
     @click="handleClick"
   >
@@ -94,7 +97,7 @@ const handleClick = () => {
 }
 
 .button-alter:not(:disabled) {
-  background-color: #F0F0F0; 
+  background-color: #F0F0F0;
   color: #6C6C6C;
 }
 

@@ -1,14 +1,17 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from django.contrib.auth.models import AbstractUser
+
+class EmailVerification(models.Model):
+    id = models.AutoField(primary_key=True)
+    email = models.EmailField(unique=True)
+    is_verified = models.BooleanField(default=False)
+    verification_token = models.CharField(max_length=100, blank=True, null=True)
+    token_created_at = models.DateTimeField(auto_now_add=True)
 
 
 class User(AbstractUser):
-    is_verified = models.BooleanField(default=False)
-    verification_token = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(max_length=15, blank=True)
-    token_created_at = models.DateTimeField(auto_now_add=True)
+    username = models.CharField(max_length=100, unique=True, blank=True, null=True)
 
 
 class Category(models.Model):

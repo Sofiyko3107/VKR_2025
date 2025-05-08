@@ -7,7 +7,7 @@ import TabButton from "../components/TabButton.vue"
 import { ref } from 'vue'
 import RadioButton from "@/components/RadioButton.vue";
 
-const activeTab = ref('profile')    
+const activeTab = ref('profile')
 const gender = ref('male'); // 'male' или 'female'
 </script>
 
@@ -25,7 +25,7 @@ const gender = ref('male'); // 'male' или 'female'
             Персональная информация
         </div>
         <div class="profile-wrapper">
-            
+
             <InputGroup
                 input-label="Имя"
                 inputPlaceholder="Иван"
@@ -51,20 +51,20 @@ const gender = ref('male'); // 'male' или 'female'
                     Пол
                 </div>
                 <div class="icon-menu">
-                    <RadioButton 
+                    <RadioButton
                         v-model="gender"
                         value="female"
                         label="Женский"
                         name="gender"
                     />
-                    <RadioButton 
+                    <RadioButton
                         v-model="gender"
                         value="male"
                         label="Мужской"
                         name="gender"
                     />
-                    
-                </div>  
+
+                </div>
             </div>
             <div class="double-column-input">
                 <InputGroup
@@ -88,12 +88,12 @@ const gender = ref('male'); // 'male' или 'female'
             <div class="button-location buttons-column">
                 <Button alter @click="">Добавить</Button>
             </div>
-            
+
         </div>
     </div>
-    
-        
-    
+
+
+
 
 
 </template>
@@ -146,11 +146,11 @@ const gender = ref('male'); // 'male' или 'female'
     align-items: center;
     cursor: pointer;
     gap: 16px;
-   
+
 }
 
 .icon-menu {
-    
+
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -163,17 +163,6 @@ const gender = ref('male'); // 'male' или 'female'
     padding-left: 21px;
     margin-bottom: 8px;
 
-}
-
-.T1{
-    font-size: 20px;
-    height: 24px;
-    padding-bottom: 3px;
-    line-height: 1.2;
-}
-.H2 {
-    margin-top: 48px;
-    font-size: 40px;
 }
 
 .profile-wrapper {

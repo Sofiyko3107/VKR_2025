@@ -1,4 +1,4 @@
-from .models import Product, Category
+from .models import Product, Category, EmailVerification
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
@@ -10,13 +10,19 @@ from django.conf import settings
 User = get_user_model()
 
 
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailVerification
+        fields = ['email', 'is_verified', 'verification_token']
+
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password2']
+        fields = ['email', 'password', 'password2']
 
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -27,23 +33,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
-            is_active=False,
-            verification_token=get_random_string(50),
-            token_created_at=timezone.now()
-        )
-
-        # Отправка email с подтверждением
-        verification_link = f"{settings.FRONTEND_URL}/verify-email/{user.verification_token}/"
-
-        send_mail(
-            'Подтвердите ваш email',
-            f'Пожалуйста, перейдите по ссылке для подтверждения: {verification_link}',
-            settings.EMAIL_HOST_USER,
-            [user.email],
-            fail_silently=False,
+            username=validated_data['email'].split('@')[0],
         )
 
         return user

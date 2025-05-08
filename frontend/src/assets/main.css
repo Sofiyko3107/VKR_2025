@@ -7,3 +7,14 @@
   color: black;
   background-color: white;
 }
+
+.T1{
+    font-size: 20px;
+    min-height: 24px;
+    padding-bottom: 3px;
+    line-height: 1.2;
+}
+.H2 {
+    margin-top: 48px;
+    font-size: 40px;
+}

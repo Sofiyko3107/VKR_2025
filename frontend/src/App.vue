@@ -4,6 +4,8 @@ import HelloWorld from './components/HelloWorld.vue'
 import Toolbar from "./components/Toolbar.vue"
 import InputGroup from "./components/InputGroup.vue"
 import ProfileView from "./views/ProfileView.vue"
+import AuthModal from "@/components/AuthModal.vue";
+import StepProgress from "@/components/StepProgress.vue";
 
 </script>
 
@@ -11,9 +13,10 @@ import ProfileView from "./views/ProfileView.vue"
   <Toolbar></Toolbar>
   <div class="wrapper">
     <div class="screen">
-      <ProfileView></ProfileView>
+      <router-view></router-view>
     </div>
   </div>
+
 </template>
 
 
