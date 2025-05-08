@@ -12,7 +12,7 @@ const gender = ref('male'); // 'male' или 'female'
 </script>
 
 <template>
-    <div class="screen">
+    <div>
         <div class="tabs-container">
             <TabButton :active="activeTab === 'orders'" @click="activeTab = 'orders'">
              Мои заказы
@@ -43,8 +43,8 @@ const gender = ref('male'); // 'male' или 'female'
                 inputPlaceholder="01.01.2000"
             ></InputGroup>
             <InputGroup
-                input-label="Фамилия"
-                inputPlaceholder="Иванов"
+                input-label="Номер телефона"
+                inputPlaceholder="+7"
             ></InputGroup>
             <div class="wrapper-logo">
                 <div class="T2">
@@ -90,8 +90,6 @@ const gender = ref('male'); // 'male' или 'female'
             </div>
             
         </div>
-        
-        <input style="width: 100px; height: 20px;" type="file"></input>
     </div>
     
         
@@ -174,6 +172,7 @@ const gender = ref('male'); // 'male' или 'female'
     line-height: 1.2;
 }
 .H2 {
+    margin-top: 48px;
     font-size: 40px;
 }
 

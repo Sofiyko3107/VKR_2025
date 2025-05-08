@@ -65,8 +65,8 @@ const handleClick = () => {
 }
 
 .label {
-  font-size: 16px;
-  color: #333;
+  font-size: 20px;
+  color: #1e1e1e;
 }
 
 .disabled {

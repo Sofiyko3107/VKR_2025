@@ -8,9 +8,11 @@ import ProfileView from "./views/ProfileView.vue"
 </script>
 
 <template>
+  <Toolbar></Toolbar>
   <div class="wrapper">
-    <Toolbar></Toolbar>
-    <ProfileView></ProfileView>
+    <div class="screen">
+      <ProfileView></ProfileView>
+    </div>
   </div>
 </template>
 
@@ -26,20 +28,14 @@ import ProfileView from "./views/ProfileView.vue"
 
 }
 
-.wrapper-logo {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: center;
 
-}
 
 .screen {
-
   margin: 48px 100px 48px 100px;
 
 }
 .wrapper {
+  display: block;
   width: 1440px;
   margin: auto;
 }

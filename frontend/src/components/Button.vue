@@ -1,4 +1,8 @@
 <script setup>
+import { computed } from 'vue'
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiCartOutline, mdiAccountCircleOutline } from '@mdi/js';
+
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -8,10 +12,25 @@ const props = defineProps({
   alter: {
     type: Boolean,
     default: false
+  },
+  text: {
+    type: Boolean,
+    default: false
+  },
+  icon: {
+    type: Boolean,
+    default: false
   }
 })
 
 const emit = defineEmits(['click'])
+
+const buttonClass = computed(() => {
+  if (props.alter) return 'button-alter'
+  if (props.text) return 'text-button'
+  if (props.icon) return "icon-button"
+  return 'button'
+})
 
 const handleClick = () => {
   if (!props.disabled) {
@@ -22,15 +41,45 @@ const handleClick = () => {
 
 <template>
   <button
-    :class="[alter ? 'button-alter' : 'button']"
+    :class="buttonClass"
+
     :disabled="disabled"
     @click="handleClick"
   >
     <slot></slot>
+    <slot name="icon"></slot>
   </button>
 </template>
 
 <style scoped>
+
+.icon-button{
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color:#1E1E1E;
+  transition: color 0.1s;
+}
+
+.icon-button:hover{
+  color:#6C6C6C;
+}
+
+.text-button{
+  font-size: 20px;
+  height: 24px;
+  width: auto;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color:#1E1E1E;
+  transition: color 0.1s;
+
+}
+
+.text-button:hover {
+  color:#6C6C6C;
+}
 
 .button-alter{
     padding: 12px 24px;

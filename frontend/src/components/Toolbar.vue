@@ -1,30 +1,37 @@
 <script setup>
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiCartOutline, mdiAccountCircleOutline } from '@mdi/js';
-import logoUrl from '@/assets/logo.png'
+import logo1Url from '@/assets/logo1.png'
+import Button from "./Button.vue"
 </script>
 
 <template>
     <div class="core">
         <div class="wrapper">
-            <div class="nav">
-                <img 
-                    :src="logoUrl" 
+            <img 
+                    :src="logo1Url" 
                     alt="Название компании" 
                     width="150" 
                     height="50" 
                     class="site-logo"
                 >
-                <div class="wrapper-nav-list">
-                    <div>каталог</div>
-                    <div>услуги</div>
-                    <div>о компании</div>
-                    <div>контакты</div>
-                </div>
+            
+                
+            <div class="wrapper-nav-list">
+                <Button text @click="">каталог</Button>
+                <Button text @click="">услуги</Button>
+                <Button text @click="">о компании</Button>
+                <Button text @click="">контакты</Button>
             </div>
-            <div class="wrapper-logo">
-                <SvgIcon type="mdi" :path="mdiCartOutline"/>
-                <SvgIcon type="mdi" :path="mdiAccountCircleOutline"/>
+         
+            <div class="wrapper-logo">  
+                <Button icon @click="">
+                    <template #icon><SvgIcon type="mdi" :path="mdiCartOutline"/></template>
+                </Button>
+                <Button icon @click="">
+                    <template #icon><SvgIcon type="mdi" :path="mdiAccountCircleOutline"/></template>
+                </Button>
+        
             </div>
         </div>
     </div>
@@ -33,17 +40,29 @@ import logoUrl from '@/assets/logo.png'
 </template>
 
 <style scoped>
+
+.wrapper-logo {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+
+}
+
 .core {
     background-color: white;
     width: 100%;
+    border-bottom: 1px solid #DDDDDD;
 }
 
 .wrapper {
     display: flex;
     flex-direction: row;
     margin: auto;
-    width: 86%;
-    height: 71px;
+    width: 1440px;
+    height: 80px;
+    margin: auto;
+    padding: 0 100px 0 100px;
     justify-content: space-between;
 }
 
@@ -51,15 +70,13 @@ import logoUrl from '@/assets/logo.png'
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 24px;
-}
-
-
-
-.nav {
+    gap: 48px;
     display: flex;
-    flex-direction: row;   
+    flex-direction: row;  
 }
+
+
+
 
 .site-logo {
     max-height: 71px;
