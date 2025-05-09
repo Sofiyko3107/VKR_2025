@@ -6,7 +6,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.utils import timezone
 from .serializers import UserRegistrationSerializer
 from rest_framework.decorators import api_view
@@ -16,6 +16,37 @@ from django.shortcuts import get_object_or_404
 from .utils import send_confirmation_email
 
 User = get_user_model()
+
+
+@api_view(['POST'])
+def logout_view(request):
+    logout(request)
+    return Response({'status': 'success'})
+
+
+@api_view(['GET'])
+def current_user(request):
+    if request.user.is_authenticated:
+        return Response({
+            'id': request.user.id,
+            'username': request.user.username,
+            'email': request.user.email
+        })
+    return Response({'detail': 'Not authenticated'}, status=401)
+
+
+@api_view(['POST'])
+def login_view(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    user_model = get_user_model()
+    user_data = user_model.objects.get(email=email)
+    print(user_data)
+    user = authenticate(request, username=user_data.username, password=password)
+    if user:
+        login(request, user)  # Создаёт сессию
+        return Response({'status': 'success'})
+    return Response({'status': 'error'}, status=401)
 
 
 @extend_schema(
@@ -65,6 +96,7 @@ def check_confirmation(request):
     return Response({
         'status': 'confirmed' if emailVerification.is_verified else 'pending'
     })
+
 
 class EmailVerificationAPIView(APIView):
     @extend_schema(description="Получение всех категорий",
@@ -164,7 +196,6 @@ class VerifyEmailAPIView(generics.GenericAPIView):
     def get(self, request, token):
         try:
             emailVerification = EmailVerification.objects.get(verification_token=token)
-
             if (timezone.now() - emailVerification.token_created_at).days > 1:
                 return Response(
                     {'error': 'Срок действия ссылки истек'},
@@ -179,7 +210,7 @@ class VerifyEmailAPIView(generics.GenericAPIView):
                 {'message': 'Email успешно подтвержден!'},
                 status=status.HTTP_200_OK
             )
-        except User.DoesNotExist:
+        except EmailVerification.DoesNotExist:
             return Response(
                 {'error': 'Неверная ссылка подтверждения'},
                 status=status.HTTP_400_BAD_REQUEST

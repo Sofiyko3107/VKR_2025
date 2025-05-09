@@ -7,9 +7,6 @@ import Register from "@/components/AuthComponents/Register.vue";
 
 const activeTab = ref('auth')
 
-const handleSwitch = (active) => {
-  activeTab.value = active
-}
 </script>
 
 <template>
@@ -18,9 +15,9 @@ const handleSwitch = (active) => {
         <div class="auth-side">
         </div>
         <div class="auth-content">
-          <switch-button @click-on-active="active => handleSwitch(active)"></switch-button>
+          <switch-button v-model="activeTab"></switch-button>
           <Login v-if="activeTab === 'auth'"></Login>
-          <Register v-else></Register>
+          <Register v-else @login="activeTab = 'auth'"></Register>
         </div>
       </div>
   </div>

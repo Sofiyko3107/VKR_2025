@@ -13,7 +13,11 @@ const props = defineProps({
     withIcon: {
         type: Boolean,
         default: false
-    }
+    },
+    passwordInput: {
+    type: Boolean,
+    default: false
+  }
 })
 </script>
 
@@ -24,7 +28,7 @@ const props = defineProps({
             <slot v-if="withIcon" name="icon"></slot>
             <input
                 v-model="model"
-                type="text"
+                :type="passwordInput ? 'password' : 'text'"
                 :placeholder="inputPlaceholder"
                 :disabled="disabled"
                 :class="['custom-input', { 'with-icon': withIcon }]"

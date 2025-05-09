@@ -13,4 +13,7 @@ urlpatterns = [
     path('verify-email/<str:token>/', VerifyEmailAPIView.as_view(), name='api_verify_email'),
     path('send-confirmation-message', EmailVerificationAPIView.as_view(), name='api_verify_email'),
     path('check-confirmation', check_confirmation, name='api_check_confirmation'),
+    path('login', views.login_view, name='login'),
+    path('profile', views.current_user, name='profile'),
+    path('logout', views.logout_view, name='logout'),
 ]

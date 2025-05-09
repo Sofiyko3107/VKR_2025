@@ -14,10 +14,9 @@ const api = axios.create({
 // Request Interceptor - обработка ВСЕХ исходящих запросов
 api.interceptors.request.use(
   (config) => {
-    // Добавляем токен авторизации (если есть)
-    const token = localStorage.getItem('authToken')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    const csrfToken = getCookie("csrftoken");
+    if (csrfToken && ["post", "put", "patch", "delete"].includes(config.method.toLowerCase())) {
+      config.headers["X-CSRFToken"] = csrfToken;
     }
 
     // Логируем запрос (только в dev-режиме)
@@ -76,5 +75,20 @@ api.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 export default api
+
+// Функция для получения куки
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}

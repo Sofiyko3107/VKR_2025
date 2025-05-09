@@ -1,13 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 
-const activeTab = ref('auth') // 'auth' или 'reg'
+const modelValue = defineModel()
+
 const emit = defineEmits(['click-on-active'])
 function handleClick(tab) {
-  if (tab !== activeTab.value) {
-    activeTab.value = tab
-    emit('click-on-active', activeTab.value)
-  }
+  modelValue.value = tab
+  console.log(modelValue)
+  // if (tab !== activeTab.value) {
+  //   emit('click-on-active', activeTab.value)
+  // }
 }
 </script>
 
@@ -16,21 +18,21 @@ function handleClick(tab) {
     <div class="slider">
       <div
         class="text"
-        :class="{ active: activeTab === 'auth' }"
+        :class="{ active: modelValue === 'auth' }"
         @click="handleClick('auth')"
       >
         Авторизация
       </div>
       <div
         class="text"
-        :class="{ active: activeTab === 'reg' }"
+        :class="{ active: modelValue === 'reg' }"
         @click="handleClick('reg')"
       >
         Регистрация
       </div>
       <div
         class="slider-button"
-        :class="{ moved: activeTab === 'reg' }"
+        :class="{ moved: modelValue === 'reg' }"
       ></div>
     </div>
   </div>

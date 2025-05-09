@@ -10,10 +10,12 @@ import RepositoryHelper from "@/api/registerHelperApi.js"
 import {useRegisterStepsStore} from "@/stores/registerStepStore.js";
 
 const currentStep = ref(1);
+const emit = defineEmits(['login'])
 const steps = [Step1, Step2, Step3, Step4];
 const store = useRegisterStepsStore()
 
 const nextStep = async () => {
+  console.log(currentStep.value)
   switch (currentStep.value) {
     case 1:
       const { data } = await RepositoryHelper.send_confirmation_message({ email: store.getEmail })
@@ -26,7 +28,7 @@ const nextStep = async () => {
       console.log('3');
       break;
     case 4:
-      console.log('4');
+      emit('login')
       break;
     default:
       return

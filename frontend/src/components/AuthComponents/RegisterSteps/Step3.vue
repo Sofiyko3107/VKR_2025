@@ -17,7 +17,6 @@ const handleContinue = async () => {
   store.setPassword(password.value)
   store.setPassword2(password2.value)
   const { data } = await Repository.register(store.getData)
-  console.log(data)
   emit('next')
 }
 
@@ -29,6 +28,7 @@ const handleContinue = async () => {
     <input-group
       input-placeholder="Пароль"
       with-icon
+      password-input
       v-model="password"
     >
       <template #icon>
@@ -38,6 +38,7 @@ const handleContinue = async () => {
     <input-group
       input-placeholder="Повторите пароль"
       with-icon
+      password-input
       v-model="password2"
     >
       <template #icon>

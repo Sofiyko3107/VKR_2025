@@ -4,11 +4,29 @@ import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiRadioboxBlank, mdiCheckboxMarkedCircle } from '@mdi/js';
 import Button from "../components/Button.vue"
 import TabButton from "../components/TabButton.vue"
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import RadioButton from "@/components/RadioButton.vue";
+import {useAuthStore} from "@/stores/authStore.js";
 
 const activeTab = ref('profile')
 const gender = ref('male'); // 'male' или 'female'
+const userStore = useAuthStore()
+const email = ref('')
+const firstname = ref('')
+const lastname = ref('')
+const middlename = ref('')
+const tel = ref('')
+
+const loadProfileData = async () => {
+  await userStore.fetchUserData()
+  const user = userStore.user
+  email.value = user.email;
+}
+
+onMounted(() => {
+  loadProfileData()
+})
+
 </script>
 
 <template>
@@ -70,6 +88,7 @@ const gender = ref('male'); // 'male' или 'female'
                 <InputGroup
                 input-label="Электронная почта"
                 inputPlaceholder="user@example.com"
+                v-model="email"
             ></InputGroup>
             </div>
             <div class="button-location buttons-column">

@@ -3,10 +3,9 @@
 import {mdiCheckCircle} from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
 import Button from "@/components/Button.vue";
-import {useRegisterStepsStore} from "@/stores/registerStepStore.js";
 
-const store = useRegisterStepsStore()
-console.log(store.getData)
+const emit = defineEmits(['next', 'prev'])
+
 </script>
 
 <template>
@@ -16,7 +15,7 @@ console.log(store.getData)
   </div>
   <div>Теперь вы можете войти в личный кабинет</div>
   <div class="step4-actions">
-    <Button button-width="224px">Войти</Button>
+    <Button button-width="224px" @click="emit('next')">Войти</Button>
   </div>
 </template>
 
