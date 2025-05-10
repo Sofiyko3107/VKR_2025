@@ -51,8 +51,8 @@ const router = createRouter({
           component: ConfirmeView
         },
         {
-          path: '/card',
-          name: 'card',
+          path: '/cart',
+          name: 'cart',
           component: CartView,
           meta: { requiresAuth: true}
         },

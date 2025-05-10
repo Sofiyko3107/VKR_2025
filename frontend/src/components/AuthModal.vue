@@ -62,8 +62,12 @@ const router = useRouter();
 }
 
 .auth-header {
-  display: flex;
-  flex-direction: row-reverse;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 54px;
+    padding-right: 24px;
 }
 
 .auth-content {

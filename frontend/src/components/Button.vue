@@ -36,8 +36,8 @@ const buttonClass = computed(() => {
 })
 
 const buttonWidthComputed = computed(() => {
-  console.log(buttonClass)
-  if (buttonClass.value === 'button') {
+  console.log(buttonClass.value)
+  if (buttonClass.value === 'button' || buttonClass.value === 'button-alter') {
     return props.buttonWidth;
   } else {
     return 'auto'
@@ -52,7 +52,6 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div>{{ buttonWidth }}</div>
   <button
     :class="buttonClass"
     :style="{ width: buttonWidthComputed}"

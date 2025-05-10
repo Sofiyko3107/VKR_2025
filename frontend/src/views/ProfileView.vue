@@ -7,6 +7,7 @@ import TabButton from "../components/TabButton.vue"
 import {onMounted, ref} from 'vue'
 import RadioButton from "@/components/RadioButton.vue";
 import {useAuthStore} from "@/stores/authStore.js";
+import {useRouter} from "vue-router";
 
 const activeTab = ref('profile')
 const gender = ref('male'); // 'male' или 'female'
@@ -16,11 +17,17 @@ const firstname = ref('')
 const lastname = ref('')
 const middlename = ref('')
 const tel = ref('')
+const router = useRouter()
 
 const loadProfileData = async () => {
   await userStore.fetchUserData()
   const user = userStore.user
   email.value = user.email;
+}
+
+const handleLogout = async () => {
+  await userStore.logout();
+  router.push({ name: 'main' })
 }
 
 onMounted(() => {
@@ -94,7 +101,7 @@ onMounted(() => {
             <div class="button-location buttons-column">
                 <!-- Основное использование -->
                 <Button @click="">Сохранить</Button>
-                <Button alter @click="">Выйти</Button>
+                <Button alter @click="handleLogout()">Выйти</Button>
             </div>
         </div>
         <div class="H2 address">
