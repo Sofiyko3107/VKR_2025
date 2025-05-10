@@ -16,10 +16,6 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    name: {
-        type: String,
-        default: ''
-    },
     disabled: {
         type: Boolean,
         default: false
