@@ -6,9 +6,17 @@ import { ref } from 'vue'
 import RadioButton from "@/components/RadioButton.vue";
 import CardProduct from '@/components/CardProduct.vue';
 import TabButton from "../components/TabButton.vue";
+import Checkbox from '@/components/CheckBox.vue';
 
-const activeTab = ref('profile')    
-const gender = ref('male'); // 'male' или 'female'
+
+
+
+
+const isChecked = ref(false);
+const isAgreed = ref(false);
+const isDisabled = ref(true);
+const selected = ref([])
+
 </script>
 
 <template>
@@ -22,12 +30,33 @@ const gender = ref('male'); // 'male' или 'female'
     </div>
     <div class="catalog-wrapper">
       
-      <CardProduct
-        title="M300"
-        :characteristics="['B22,5', 'F200', 'W4']"
-        price="4 500 ₽/м³"
-        button-text="Заказать"
-      />
+      <div>
+        <div class="text-Catalog">
+          Каталог
+        </div>
+        <div class="text-sort">
+          Cортировка
+        </div>
+        <div>
+                    <RadioButton 
+                        v-model="cost"
+                        value="expensive"
+                        label="Сначала дороже"
+                    
+                    />
+                    <RadioButton 
+                        v-model="cost"
+                        value="cheap"
+                        label="Сначала дешевле"
+                
+                    />
+                    
+        </div>
+        <div>
+          <Checkbox v-model:selected="selected" />
+
+        </div>
+      </div>
       <CardProduct
         title="M300"
         :characteristics="['B22,5', 'F200', 'W4']"
@@ -47,11 +76,22 @@ const gender = ref('male'); // 'male' или 'female'
         button-text="Заказать"
       />
     </div>
-      
+
 </template>
       
   
   <style>
+
+.text-sort {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.text-Catalog {
+    font-size: 48px;
+    margin-bottom: 28px;
+}
 
 .catalog-wrapper {
     display: grid;
