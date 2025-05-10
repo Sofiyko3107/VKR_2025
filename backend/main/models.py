@@ -34,8 +34,11 @@ class Specification(models.Model):
 class Product(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.CharField()
-    price = models.CharField()
-    image = models.ImageField()
-    specification = models.ForeignKey(Specification, on_delete=models.CASCADE)
+    description = models.CharField(null=True, blank=True, max_length=100)
+    price = models.CharField(null=False, blank=False)
+    image = models.ImageField(upload_to='product', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    specifications = models.ManyToManyField(Specification, blank=True)
+
+    def __str__(self):
+        return str(self.id) + ' - ' + str(self.name)

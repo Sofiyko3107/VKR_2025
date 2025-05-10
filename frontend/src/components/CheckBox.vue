@@ -1,14 +1,9 @@
 <script setup>
-import { ref } from 'vue';
 
 const props = defineProps({
   options: {
     type: Array,
-    default: () => [
-      { label: 'M100-M150', value: 'm100-150' },
-      { label: 'M200-M250', value: 'm200-250' },
-      { label: 'M300-M350', value: 'm300-350' }
-    ]
+    default: () => []
   },
   selected: {
     type: Array,
@@ -19,6 +14,7 @@ const props = defineProps({
 const emit = defineEmits(['update:selected']);
 
 const toggleOption = (optionValue) => {
+  console.log(optionValue)
   const newSelected = props.selected.includes(optionValue)
     ? props.selected.filter(v => v !== optionValue)
     : [...props.selected, optionValue];
@@ -29,18 +25,17 @@ const toggleOption = (optionValue) => {
 
 <template>
   <div class="checkbox-group">
-    <h3 class="group-title">Марка</h3>
     <ul class="options-list">
-      <li 
-        v-for="option in options" 
-        :key="option.value"
+      <li
+        v-for="option in options"
+        :key="option"
         class="option-item"
-        @click="toggleOption(option.value)"
+        @click="toggleOption(option)"
       >
-        <div class="checkbox" :class="{ checked: selected.includes(option.value) }">
-          <span v-if="selected.includes(option.value)" class="check-icon">✓</span>
+        <div class="checkbox" :class="{ checked: selected.includes(option) }">
+          <span v-if="selected.includes(option)" class="check-icon">✓</span>
         </div>
-        <span class="option-label">{{ option.label }}</span>
+        <span class="option-label">{{ option }}</span>
       </li>
     </ul>
   </div>

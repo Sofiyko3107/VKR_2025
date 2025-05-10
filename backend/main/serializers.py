@@ -1,4 +1,4 @@
-from .models import Product, Category, EmailVerification
+from .models import Product, Category, EmailVerification, Specification
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
@@ -41,9 +41,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class SpecificationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Specification
         fields = '__all__'
 
 
@@ -51,3 +51,21 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    specifications = SpecificationSerializer(many=True, read_only=True)
+    category = CategorySerializer(many=False, read_only=True)
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+    def get_image(self, obj):
+        if obj.image:
+            request = self.context.get('request')
+            if request is not None:
+                return request.build_absolute_uri(obj.image.url)
+            return obj.image.url  # fallback если нет request в контексте
+        return None

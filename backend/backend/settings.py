@@ -155,6 +155,12 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
+# Основной url для управления медиафайлами
+MEDIA_URL = '/media/'
+
+# Путь хранения картинок
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER

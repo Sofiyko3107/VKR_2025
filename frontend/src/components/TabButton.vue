@@ -32,6 +32,7 @@
     <style scoped>
     .tab-button {
       border: none;
+      width: 100%;
       padding: 12px 24px;
       border-bottom: 1px solid #dddddd;
       background: none;
