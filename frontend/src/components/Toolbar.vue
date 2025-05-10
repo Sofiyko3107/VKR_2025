@@ -50,6 +50,9 @@ const router = useRouter();
     flex-direction: row;
     gap: 16px;
     align-items: center;
+}
+
+.wrapper-logo > * {
 
 }
 

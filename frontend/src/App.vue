@@ -1,11 +1,6 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 import Toolbar from "./components/Toolbar.vue"
-import InputGroup from "./components/InputGroup.vue"
-import ProfileView from "./views/ProfileView.vue"
-import AuthModal from "@/components/AuthModal.vue";
-import StepProgress from "@/components/StepProgress.vue";
 
 </script>
 
@@ -16,7 +11,6 @@ import StepProgress from "@/components/StepProgress.vue";
       <router-view></router-view>
     </div>
   </div>
-
 </template>
 
 
