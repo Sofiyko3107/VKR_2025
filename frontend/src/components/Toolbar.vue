@@ -3,35 +3,39 @@ import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiCartOutline, mdiAccountCircleOutline } from '@mdi/js';
 import logo1Url from '@/assets/logo1.png'
 import Button from "./Button.vue"
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+
 </script>
 
 <template>
     <div class="core">
         <div class="wrapper">
-            <img 
-                    :src="logo1Url" 
-                    alt="Название компании" 
-                    width="150" 
-                    height="50" 
+            <img
+                    :src="logo1Url"
+                    alt="Название компании"
+                    width="150"
+                    height="50"
                     class="site-logo"
                 >
-            
-                
+
+
             <div class="wrapper-nav-list">
-                <Button text @click="">каталог</Button>
-                <Button text @click="">услуги</Button>
-                <Button text @click="">о компании</Button>
-                <Button text @click="">контакты</Button>
+                <Button text @click="router.push({ name: 'catalog'})">каталог</Button>
+                <Button text @click="router.push({ name: 'services'})">услуги</Button>
+                <Button text @click="router.push({ name: 'about'})">о компании</Button>
+                <Button text @click="router.push({ name: 'contact'})">контакты</Button>
             </div>
-         
-            <div class="wrapper-logo">  
+
+            <div class="wrapper-logo">
                 <Button icon @click="">
                     <template #icon><SvgIcon type="mdi" :path="mdiCartOutline"/></template>
                 </Button>
                 <Button icon @click="">
                     <template #icon><SvgIcon type="mdi" :path="mdiAccountCircleOutline"/></template>
                 </Button>
-        
+
             </div>
         </div>
     </div>
@@ -72,7 +76,7 @@ import Button from "./Button.vue"
     align-items: center;
     gap: 48px;
     display: flex;
-    flex-direction: row;  
+    flex-direction: row;
 }
 
 
