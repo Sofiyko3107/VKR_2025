@@ -11,32 +11,27 @@ const router = useRouter();
 
 <template>
     <div class="core">
-        <div class="wrapper">
+        <div class="wrapper-toolbar">
+          <div class="site-logo">
             <img
-                    :src="logo1Url"
-                    alt="Название компании"
-                    width="150"
-                    height="50"
-                    class="site-logo"
-                >
-
-
-            <div class="wrapper-nav-list">
-                <Button text @click="router.push({ name: 'catalog'})">каталог</Button>
-                <Button text @click="router.push({ name: 'services'})">услуги</Button>
-                <Button text @click="router.push({ name: 'about'})">о компании</Button>
-                <Button text @click="router.push({ name: 'contact'})">контакты</Button>
-            </div>
-
-            <div class="wrapper-logo">
-                <Button icon @click="">
-                    <template #icon><SvgIcon type="mdi" :path="mdiCartOutline"/></template>
-                </Button>
-                <Button icon @click="">
-                    <template #icon><SvgIcon type="mdi" :path="mdiAccountCircleOutline"/></template>
-                </Button>
-
-            </div>
+              :src="logo1Url"
+              alt="Название компании"
+            >
+          </div>
+          <div class="wrapper-nav-list">
+            <Button text @click="router.push({ name: 'catalog'})">каталог</Button>
+            <Button text @click="router.push({ name: 'services'})">услуги</Button>
+            <Button text @click="router.push({ name: 'about'})">о компании</Button>
+            <Button text @click="router.push({ name: 'contact'})">контакты</Button>
+          </div>
+          <div class="wrapper-logo">
+            <Button icon @click="router.push({ name: 'cart'})">
+              <template #icon><SvgIcon type="mdi" :path="mdiCartOutline"/></template>
+            </Button>
+            <Button icon @click="router.push({ name: 'profile'})">
+              <template #icon><SvgIcon type="mdi" :path="mdiAccountCircleOutline"/></template>
+            </Button>
+          </div>
         </div>
     </div>
 
@@ -44,52 +39,37 @@ const router = useRouter();
 </template>
 
 <style scoped>
-
-.wrapper-logo {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: center;
-}
-
-.wrapper-logo > * {
-
-}
-
 .core {
     background-color: white;
     width: 100%;
     border-bottom: 1px solid #DDDDDD;
 }
+.wrapper-toolbar {
+  width: 1440px;
+  height: 80px;
+  margin: auto;
+  padding: 0 100px 0 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-.wrapper {
-    display: flex;
-    flex-direction: row;
-    margin: auto;
-    width: 1440px;
-    height: 80px;
-    margin: auto;
-    padding: 0 100px 0 100px;
-    justify-content: space-between;
 }
-
-.wrapper-nav-list {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 48px;
-    display: flex;
-    flex-direction: row;
-}
-
-
-
-
 .site-logo {
-    max-height: 71px;
-    max-width: 117px; /* Для адаптивности */
-    height: auto;    /* Сохраняет пропорции */
-    width: auto;
-    margin-right: 40px
+  width: 106px;
+  height: 64px;
 }
+.wrapper-nav-list {
+  display: flex;
+  flex-direction: row;
+  gap: 48px
+}
+.wrapper-logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 62px;
+  height: 24px;
+}
+
 </style>

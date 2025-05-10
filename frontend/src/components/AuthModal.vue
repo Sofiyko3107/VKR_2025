@@ -4,8 +4,13 @@ import SwitchButton from "@/components/SwitchButton.vue";
 import Login from "@/components/AuthComponents/Login.vue";
 import { ref } from "vue"
 import Register from "@/components/AuthComponents/Register.vue";
+import Button from "@/components/Button.vue";
+import {mdiClose} from "@mdi/js";
+import SvgIcon from "@jamescoyle/vue-icon";
+import {useRouter} from "vue-router";
 
-const activeTab = ref('auth')
+const activeTab = ref('auth');
+const router = useRouter();
 
 </script>
 
@@ -15,7 +20,14 @@ const activeTab = ref('auth')
         <div class="auth-side">
         </div>
         <div class="auth-content">
-          <switch-button v-model="activeTab"></switch-button>
+          <div class="auth-header">
+            <switch-button v-model="activeTab"></switch-button>
+            <Button icon @click="router.back">
+              <template #icon>
+                <SvgIcon type="mdi" :path="mdiClose"/>
+              </template>
+            </Button>
+          </div>
           <Login v-if="activeTab === 'auth'"></Login>
           <Register v-else @login="activeTab = 'auth'"></Register>
         </div>
@@ -47,6 +59,11 @@ const activeTab = ref('auth')
   height: 100%;
   background-color: #F1AF25;
   border-radius: 20px 0 0 20px;
+}
+
+.auth-header {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .auth-content {

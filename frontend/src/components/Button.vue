@@ -35,6 +35,15 @@ const buttonClass = computed(() => {
   return 'button'
 })
 
+const buttonWidthComputed = computed(() => {
+  console.log(buttonClass)
+  if (buttonClass.value === 'button') {
+    return props.buttonWidth;
+  } else {
+    return 'auto'
+  }
+});
+
 const handleClick = () => {
   if (!props.disabled) {
     emit('click')
@@ -43,9 +52,10 @@ const handleClick = () => {
 </script>
 
 <template>
+  <div>{{ buttonWidth }}</div>
   <button
     :class="buttonClass"
-    :style="{ width: buttonWidth }"
+    :style="{ width: buttonWidthComputed}"
     :disabled="disabled"
     @click="handleClick"
   >
@@ -57,6 +67,10 @@ const handleClick = () => {
 <style scoped>
 
 .icon-button{
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: transparent;
   border: none;
   padding: 0;
