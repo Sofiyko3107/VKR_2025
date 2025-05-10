@@ -102,10 +102,7 @@ const gender = ref('male'); // 'male' или 'female'
 
 <style scoped>
 
-.tabs-container{
-    display: flex;
-    width: 100%;
-}
+
 
 .tabs-container > * {
     flex: 1; /* чтобы кнопки занимали равное пространство */

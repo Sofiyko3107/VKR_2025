@@ -11,13 +11,15 @@ import ProfileView from "./views/ProfileView.vue"
   <Toolbar></Toolbar>
   <div class="wrapper">
     <div class="screen">
-      <ProfileView></ProfileView>
+        <RouterView></RouterView>
     </div>
   </div>
 </template>
 
 
 <style scoped>
+
+
 
 .input-label {
     font-size: 16px;

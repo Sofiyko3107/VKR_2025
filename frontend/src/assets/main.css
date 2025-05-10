@@ -7,3 +7,11 @@
   color: black;
   background-color: white;
 }
+.tabs-container{
+  display: flex;
+  width: 100%;
+}
+
+.tabs-container > * {
+  flex-grow: 1;
+}
